@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Surat Kecil Buat Kamu</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,500&family=Nunito:wght@400;700&display=swap">
+<style>
+/* Layout: satu kolom sempit di tengah layar. Lima adegan bergantian: amplop, surat, pertanyaan, dua jawaban. */
+:root {
+  --bg: #fff0f1;
+  --bg-2: #ffd9e0;
+  --paper: #fffaf8;
+  --ink: #43192f;
+  --muted: #85586b;
+  --line: #f2cdd6;
+  --blush: #f9c2cf;
+  --btn: #c0285a;
+  --on-btn: #ffffff;
+  --link: #a81f4d;
+  --glow: rgba(192, 40, 90, 0.22);
+  --f-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --f-hand: 'Caveat', 'Segoe Script', 'Comic Sans MS', cursive;
+  --f-ui: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1c0c17;
+    --bg-2: #341428;
+    --paper: #2a1423;
+    --ink: #fde8ee;
+    --muted: #d3a2b4;
+    --line: #503046;
+    --blush: #6e2c49;
+    --btn: #ff86a8;
+    --on-btn: #3a0f20;
+    --link: #ff9db8;
+    --glow: rgba(255, 134, 168, 0.2);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1c0c17;
+  --bg-2: #341428;
+  --paper: #2a1423;
+  --ink: #fde8ee;
+  --muted: #d3a2b4;
+  --line: #503046;
+  --blush: #6e2c49;
+  --btn: #ff86a8;
+  --on-btn: #3a0f20;
+  --link: #ff9db8;
+  --glow: rgba(255, 134, 168, 0.2);
+  color-scheme: dark;
+}
+
+html { height: 100%; }
+body {
+  margin: 0;
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding-block: 2rem;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  background-color: var(--bg);
+  background-image: radial-gradient(60rem 36rem at 50% -10%, var(--bg-2), transparent 70%);
+  color: var(--ink);
+  font-family: var(--f-ui);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+.app { width: 100%; max-width: 30rem; min-width: 0; }
+.stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  animation: rise 0.55s ease both;
+}
+.stage h1, .stage h2 { outline: none; }
+h1, h2 {
+  margin: 0;
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-style: italic;
+  font-size: clamp(2rem, 8vw, 2.7rem);
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.eyebrow {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--link);
+}
+.sub { margin: 0; max-width: 24rem; color: var(--muted); text-wrap: pretty; }
+
+.ico { width: 1em; height: 1em; fill: currentColor; }
+
+.envelope {
+  width: min(16rem, 72vw);
+  height: auto;
+  margin-bottom: 0.5rem;
+  animation: bob 3.6s ease-in-out infinite;
+  filter: drop-shadow(0 18px 18px var(--glow));
+}
+.env-body { fill: var(--paper); stroke: var(--line); stroke-width: 2; }
+.env-fold { fill: none; stroke: var(--line); stroke-width: 2; stroke-linejoin: round; }
+.env-flap { fill: var(--blush); stroke: var(--line); stroke-width: 2; stroke-linejoin: round; }
+.seal { fill: var(--btn); }
+.seal-heart { fill: var(--on-btn); }
+
+.btn {
+  appearance: none;
+  border: 2px solid transparent;
+  min-height: 48px;
+  padding: 0.6rem 1.6rem;
+  border-radius: 999px;
+  font: 700 1rem/1.2 var(--f-ui);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+.btn:focus-visible { outline: 3px solid var(--link); outline-offset: 3px; }
+.btn.primary {
+  background: var(--btn);
+  color: var(--on-btn);
+  box-shadow: 0 10px 22px -10px var(--glow), 0 2px 0 rgba(0, 0, 0, 0.06);
+}
+.btn.primary:hover { transform: translateY(-2px); }
+.btn.soft {
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--link);
+}
+.btn.soft:hover { transform: translateY(-2px); }
+.btn.text {
+  background: transparent;
+  color: var(--link);
+  min-height: 44px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.choices {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 0.4rem;
+}
+
+.letter {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  padding: 2rem 1.5rem 1.6rem;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 24px 44px -26px var(--glow);
+  transform: rotate(-0.5deg);
+}
+.letter .date {
+  margin: 0 0 1rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.letter p.line {
+  margin: 0 0 0.9rem;
+  font-family: var(--f-hand);
+  font-size: 1.55rem;
+  line-height: 1.3;
+  animation: rise 0.6s ease both;
+  animation-delay: calc(var(--i, 0) * 0.35s + 0.1s);
+}
+.letter .sign { margin: 1.2rem 0 0; color: var(--link); }
+.stamp {
+  position: absolute;
+  top: 0.9rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 10px;
+  border: 2px dashed var(--line);
+  border-radius: 6px;
+  color: var(--link);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  transform: rotate(5deg);
+}
+.stamp .ico { font-size: 1.1rem; }
+
+.big-heart {
+  font-size: 5.5rem;
+  color: var(--btn);
+  animation: beat 1.4s ease-in-out infinite;
+  filter: drop-shadow(0 12px 16px var(--glow));
+}
+.calm-heart { font-size: 3.5rem; color: var(--link); }
+
+#rain {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 5;
+}
+.heart {
+  position: absolute;
+  bottom: -40px;
+  color: var(--btn);
+  animation: float var(--t, 5s) ease-in var(--d, 0s) both;
+}
+.heart .ico { width: var(--z, 22px); height: var(--z, 22px); }
+
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes bob { 0%, 100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-8px) rotate(1deg); } }
+@keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+@keyframes float {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.9; }
+  100% { transform: translateY(-115vh) rotate(25deg); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="heart" viewBox="-10 -12 20 17">
+    <path d="M0,4 C-9,-3 -8,-11 -3,-11 C-1,-11 0,-9 0,-8 C0,-9 1,-11 3,-11 C8,-11 9,-3 0,4Z"/>
+  </symbol>
+</svg>
+
+<main class="app">
+  <section class="stage" id="s-envelope" aria-labelledby="h-env">
+    <svg class="envelope" viewBox="0 0 220 160" role="img" aria-label="Amplop dengan segel hati">
+      <rect class="env-body" x="8" y="24" width="204" height="128" rx="10"/>
+      <path class="env-fold" d="M10 148 L110 84 L210 148"/>
+      <path class="env-flap" d="M10 30 L110 102 L210 30 V26 Q210 24 206 24 H14 Q10 24 10 26 Z"/>
+      <circle class="seal" cx="110" cy="102" r="17"/>
+      <use class="seal-heart" href="#heart" x="95" y="90" width="30" height="26"/>
+    </svg>
+    <p class="eyebrow">Khusus buat kamu</p>
+    <h1 id="h-env" tabindex="-1">Ada surat kecil di sini</h1>
+    <p class="sub">Aku tulis sendiri, bukan dari template. Bacanya santai aja, nggak ada yang buru-buru.</p>
+    <button class="btn primary" id="open" type="button">Buka suratnya</button>
+  </section>
+
+  <section class="stage" id="s-letter" aria-labelledby="h-letter" hidden>
+    <h2 id="h-letter" tabindex="-1" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Isi surat</h2>
+    <article class="letter">
+      <div class="stamp" aria-hidden="true"><svg class="ico"><use href="#heart"/></svg><span id="stampDate">NOV</span></div>
+      <p class="date" id="date"></p>
+      <p class="line" style="--i:0">Hai,</p>
+      <p class="line" style="--i:1">Aku tahu ini bisa terasa tiba-tiba. Aku nulis di sini karena lewat chat rasanya nggak cukup, dan aku mau kamu bisa baca sambil tenang.</p>
+      <p class="line" style="--i:2">Sejak kenal kamu, hari-hariku jadi lebih ringan. Aku suka caramu ketawa, caramu cerita hal-hal kecil, dan caramu bikin orang di sekitarmu ngerasa nyaman.</p>
+      <p class="line" style="--i:3">Aku suka sama kamu. Itu yang pengin aku sampaikan, tanpa maksud buru-buru.</p>
+      <p class="line" style="--i:4">Kamu nggak perlu jawab sekarang, dan apa pun jawabanmu, aku tetap mau jadi temanmu.</p>
+      <p class="line sign" style="--i:5">Dari aku, yang deg-degan waktu nulis ini.</p>
+    </article>
+    <button class="btn primary" id="next" type="button">Lanjut</button>
+  </section>
+
+  <section class="stage" id="s-ask" aria-labelledby="h-ask" hidden>
+    <p class="eyebrow">Satu pertanyaan</p>
+    <h2 id="h-ask" tabindex="-1">Mau nggak jadi pacar aku?</h2>
+    <p class="sub">Pilih yang paling jujur buat kamu. Dua-duanya jawaban yang baik.</p>
+    <div class="choices">
+      <button class="btn primary" id="yes" type="button">Mau</button>
+      <button class="btn soft" id="wait" type="button">Aku butuh waktu dulu</button>
+    </div>
+  </section>
+
+  <section class="stage" id="s-yes" aria-labelledby="h-yes" hidden>
+    <svg class="ico big-heart" aria-hidden="true"><use href="#heart"/></svg>
+    <h2 id="h-yes" tabindex="-1">Yeay, makasih ya.</h2>
+    <p class="sub">Aku senyum-senyum sendiri sekarang. Balas lewat chat ya, aku nungguin.</p>
+    <button class="btn text" id="again" type="button">Baca ulang suratnya</button>
+  </section>
+
+  <section class="stage" id="s-wait" aria-labelledby="h-wait" hidden>
+    <svg class="ico calm-heart" aria-hidden="true"><use href="#heart"/></svg>
+    <h2 id="h-wait" tabindex="-1">Makasih udah jujur.</h2>
+    <p class="sub">Nggak ada yang buru-buru. Ambil waktu sebanyak yang kamu butuh, dan kita lanjut kayak biasa ya.</p>
+    <button class="btn text" id="again2" type="button">Baca ulang suratnya</button>
+  </section>
+</main>
+<div id="rain" aria-hidden="true"></div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var ids = ['s-envelope', 's-letter', 's-ask', 's-yes', 's-wait'];
+  var stages = ids.map($);
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  try {
+    var now = new Date();
+    $('date').textContent = new Intl.DateTimeFormat('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(now);
+    $('stampDate').textContent = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'short' }).format(now).toUpperCase();
+  } catch (e) {}
+
+  function show(id) {
+    stages.forEach(function (s) { s.hidden = s.id !== id; });
+    var h = $(id).querySelector('h1, h2');
+    if (h) { try { h.focus({ preventScroll: true }); } catch (e) {} }
+    window.scrollTo(0, 0);
+  }
+
+  function rain() {
+    if (reduce) return;
+    var box = $('rain');
+    var svg = '<svg class="ico"><use href="#heart"/></svg>';
+    for (var i = 0; i < 34; i++) {
+      var span = document.createElement('span');
+      span.className = 'heart';
+      span.style.left = (Math.random() * 96) + '%';
+      span.style.setProperty('--d', (Math.random() * 1.6).toFixed(2) + 's');
+      span.style.setProperty('--t', (4 + Math.random() * 3).toFixed(2) + 's');
+      span.style.setProperty('--z', (16 + Math.random() * 26).toFixed(0) + 'px');
+      span.innerHTML = svg;
+      box.appendChild(span);
+      (function (el) { setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 8000); })(span);
+    }
+  }
+
+  $('open').addEventListener('click', function () { show('s-letter'); });
+  $('next').addEventListener('click', function () { show('s-ask'); });
+  $('yes').addEventListener('click', function () {
+    show('s-yes');
+    rain();
+    setTimeout(rain, 2600);
+  });
+  $('wait').addEventListener('click', function () { show('s-wait'); });
+  $('again').addEventListener('click', function () { show('s-envelope'); });
+  $('again2').addEventListener('click', function () { show('s-envelope'); });
+})();
+</script>
+</body>
+</html>
