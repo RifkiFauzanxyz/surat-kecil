@@ -148,6 +148,7 @@ h1, h2 {
   text-decoration: underline;
   text-underline-offset: 4px;
 }
+.note { margin: 0; font-size: 0.85rem; color: var(--muted); }
 .choices {
   display: flex;
   flex-wrap: wrap;
@@ -285,6 +286,7 @@ h1, h2 {
       <button class="btn primary" id="yes" type="button">Mau</button>
       <button class="btn soft" id="wait" type="button">Aku butuh waktu dulu</button>
     </div>
+    <p class="note">Pilihanmu akan terkirim ke aku.</p>
   </section>
 
   <section class="stage" id="s-yes" aria-labelledby="h-yes" hidden>
@@ -323,6 +325,21 @@ h1, h2 {
     window.scrollTo(0, 0);
   }
 
+  var FORM_URL = 'https://formspree.io/f/maeoleay';
+  function send(choice) {
+    try {
+      fetch(FORM_URL, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          _subject: 'Jawaban surat kecil: ' + choice,
+          pilihan: choice,
+          waktu: new Date().toString()
+        })
+      }).catch(function () {});
+    } catch (e) {}
+  }
+
   function rain() {
     if (reduce) return;
     var box = $('rain');
@@ -343,11 +360,12 @@ h1, h2 {
   $('open').addEventListener('click', function () { show('s-letter'); });
   $('next').addEventListener('click', function () { show('s-ask'); });
   $('yes').addEventListener('click', function () {
+    send('Mau');
     show('s-yes');
     rain();
     setTimeout(rain, 2600);
   });
-  $('wait').addEventListener('click', function () { show('s-wait'); });
+  $('wait').addEventListener('click', function () { send('Butuh waktu dulu'); show('s-wait'); });
   $('again').addEventListener('click', function () { show('s-envelope'); });
   $('again2').addEventListener('click', function () { show('s-envelope'); });
 })();
